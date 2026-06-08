@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Vera Consulting | 베라 컨설팅</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --black: #13131a;
+      --white: #f0ede6;
+      --gray: #7a7870;
+      --line: #2a2a32;
+      --accent: #b89a6a;   /* muted warm gold */
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', 'Noto Sans KR', sans-serif; background: var(--black); color: var(--white); overflow-x: hidden; }
+    a { text-decoration: none; color: inherit; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 56px; height: 64px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(0,0,0,.92); backdrop-filter: blur(20px);
+    }
+    .nav-logo { font-size: 15px; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 36px; font-size: 13px; color: var(--gray); }
+    .nav-links a:hover { color: var(--white); }
+    .nav-cta {
+      font-size: 12px; font-weight: 700; padding: 9px 20px; letter-spacing: .06em;
+      background: var(--accent); color: var(--black); border-radius: 2px;
+      transition: opacity .2s;
+    }
+    .nav-cta:hover { opacity: .85; }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh; padding-top: 64px;
+      display: flex; flex-direction: column; justify-content: center;
+      padding-bottom: 60px;
+      position: relative; overflow: hidden;
+      border-bottom: 1px solid var(--line);
+    }
+    .hero-bg-text {
+      position: absolute; left: -12px; top: 50%; transform: translateY(-52%);
+      font-size: clamp(160px, 20vw, 260px); font-weight: 900;
+      color: rgba(255,255,255,.04); line-height: 1; letter-spacing: -.06em;
+      pointer-events: none; user-select: none; white-space: nowrap;
+    }
+    .hero-inner {
+      position: relative; z-index: 1;
+      padding: 0 56px;
+    }
+    .hero-eyebrow {
+      display: flex; align-items: center; gap: 12px;
+      font-size: 11px; letter-spacing: .25em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 40px; font-weight: 600;
+    }
+    .hero-eyebrow::before { content: ''; width: 32px; height: 1px; background: var(--accent); }
+    .hero-title {
+      font-size: clamp(56px, 7.5vw, 120px);
+      font-weight: 900; line-height: .95;
+      letter-spacing: -.05em; margin-bottom: 0;
+    }
+    .hero-title .line { display: block; overflow: hidden; }
+    .hero-title .txt { display: block; }
+    .hero-title .inv {
+      display: inline-block;
+      background: var(--accent); color: var(--black);
+      padding: 0 12px; margin-left: -4px;
+    }
+    .hero-bottom {
+      display: flex; align-items: flex-end; justify-content: space-between;
+      margin-top: 64px; padding-top: 40px; border-top: 1px solid var(--line);
+    }
+    .hero-desc {
+      font-size: 16px; color: var(--gray); line-height: 1.8;
+      font-weight: 300; max-width: 420px; word-break: keep-all;
+    }
+    .hero-actions { display: flex; flex-direction: column; align-items: flex-end; gap: 16px; }
+    .btn-accent {
+      padding: 18px 44px; font-size: 15px; font-weight: 700; letter-spacing: .04em;
+      background: var(--accent); color: var(--black); border-radius: 2px;
+      transition: opacity .2s;
+    }
+    .btn-accent:hover { opacity: .85; }
+    .hero-scroll-hint {
+      font-size: 11px; color: rgba(255,255,255,.25); letter-spacing: .15em; text-transform: uppercase;
+    }
+
+    /* STATS BAND */
+    .stats-band {
+      background: var(--white); color: var(--black);
+      display: flex; border-bottom: 1px solid #ddd;
+    }
+    .stat-block {
+      flex: 1; padding: 52px 48px;
+      border-right: 1px solid #ddd;
+    }
+    .stat-block:last-child { border-right: none; }
+    .stat-num {
+      font-size: clamp(44px, 5vw, 72px); font-weight: 900;
+      letter-spacing: -.05em; line-height: 1; margin-bottom: 8px;
+    }
+    .stat-num span { color: #aaa; font-size: .55em; font-weight: 400; }
+    .stat-label { font-size: 13px; color: #666; font-weight: 400; }
+
+    /* SERVICES — full-width rows on black */
+    .services-section {
+      border-bottom: 1px solid var(--line);
+    }
+    .services-head {
+      padding: 80px 56px 56px;
+      display: flex; align-items: baseline; gap: 24px;
+    }
+    .services-head h2 {
+      font-size: clamp(32px, 4vw, 56px); font-weight: 900; letter-spacing: -.04em;
+    }
+    .services-head p { font-size: 14px; color: var(--gray); font-weight: 300; }
+    .svc-row {
+      display: grid; grid-template-columns: 100px 1fr 1fr;
+      gap: 0 60px; padding: 44px 56px;
+      border-top: 1px solid var(--line);
+      align-items: start;
+      transition: background .25s;
+      cursor: default;
+    }
+    .svc-row:hover { background: #0a0a0a; }
+    .svc-row:hover .svc-row-num { color: var(--accent); }
+    .svc-row-num {
+      font-size: 13px; font-weight: 700; color: #444; letter-spacing: .06em;
+      padding-top: 6px; transition: color .25s;
+    }
+    .svc-row-name { font-size: 28px; font-weight: 800; letter-spacing: -.03em; margin-bottom: 12px; }
+    .svc-row-desc { font-size: 14px; color: var(--gray); line-height: 1.75; font-weight: 300; word-break: keep-all; }
+    .svc-row-tags { display: flex; flex-direction: column; gap: 10px; padding-top: 6px; }
+    .svc-tag {
+      font-size: 12px; color: #555; padding-left: 12px;
+      border-left: 2px solid var(--line);
+      transition: border-color .25s, color .25s;
+    }
+    .svc-row:hover .svc-tag { border-color: var(--accent); color: #aaa; }
+
+    /* ABOUT */
+    .about-section {
+      display: grid; grid-template-columns: 1fr 1fr;
+      border-bottom: 1px solid var(--line);
+    }
+    .about-left {
+      padding: 100px 56px; border-right: 1px solid var(--line);
+      display: flex; flex-direction: column; justify-content: space-between;
+    }
+    .about-left-top .eyebrow {
+      font-size: 11px; letter-spacing: .22em; text-transform: uppercase;
+      color: var(--accent); font-weight: 600; margin-bottom: 24px;
+    }
+    .about-left-top h2 {
+      font-size: clamp(28px, 3.5vw, 48px); font-weight: 900;
+      letter-spacing: -.04em; line-height: 1.1; margin-bottom: 28px;
+    }
+    .about-left-top p { font-size: 15px; color: var(--gray); line-height: 1.85; font-weight: 300; word-break: keep-all; margin-bottom: 14px; }
+    .about-team { display: flex; flex-direction: column; gap: 0; margin-top: 48px; }
+    .team-row {
+      display: flex; align-items: center; gap: 14px;
+      padding: 18px 0; border-top: 1px solid var(--line);
+    }
+    .team-row:last-child { border-bottom: 1px solid var(--line); }
+    .t-avatar {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: var(--accent); flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 900; color: var(--black);
+    }
+    .t-info h4 { font-size: 14px; font-weight: 600; }
+    .t-info span { font-size: 12px; color: var(--gray); }
+    .about-right {
+      display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr;
+    }
+    .a-card {
+      padding: 52px 48px; border-bottom: 1px solid var(--line); border-right: 1px solid var(--line);
+      display: flex; flex-direction: column; justify-content: flex-end;
+    }
+    .a-card:nth-child(even) { border-right: none; }
+    .a-card:nth-child(3),
+    .a-card:nth-child(4) { border-bottom: none; }
+    .a-card.accent-card { background: var(--accent); color: var(--black); }
+    .a-card.accent-card .a-label { color: rgba(0,0,0,.55); }
+    .a-num { font-size: 52px; font-weight: 900; letter-spacing: -.05em; line-height: 1; margin-bottom: 8px; }
+    .a-label { font-size: 13px; color: var(--gray); }
+
+    /* PROCESS */
+    .process-section {
+      padding: 100px 56px;
+      border-bottom: 1px solid var(--line);
+    }
+    .process-head { margin-bottom: 72px; }
+    .process-head .eyebrow { font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: var(--accent); font-weight: 600; margin-bottom: 16px; }
+    .process-head h2 { font-size: clamp(28px, 3.5vw, 52px); font-weight: 900; letter-spacing: -.04em; }
+    .process-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 0;
+    }
+    .p-step { padding: 40px 40px 40px 0; border-right: 1px solid var(--line); padding-right: 40px; margin-right: 0; position: relative; }
+    .p-step:last-child { border-right: none; padding-left: 40px; padding-right: 0; }
+    .p-step:not(:first-child) { padding-left: 40px; }
+    .p-step-num {
+      font-size: 72px; font-weight: 900; letter-spacing: -.05em;
+      color: var(--line); line-height: 1; margin-bottom: 24px;
+    }
+    .p-step.active .p-step-num { color: var(--accent); }
+    .p-step h3 { font-size: 18px; font-weight: 700; margin-bottom: 10px; }
+    .p-step p { font-size: 13px; color: var(--gray); line-height: 1.7; font-weight: 300; }
+    .p-free-tag {
+      display: inline-block; margin-top: 14px;
+      font-size: 11px; font-weight: 700; padding: 4px 10px;
+      background: var(--accent); color: var(--black); border-radius: 1px; letter-spacing: .04em;
+    }
+
+    /* CONTACT */
+    .contact-section {
+      display: grid; grid-template-columns: 1fr 1fr;
+    }
+    .contact-left {
+      padding: 100px 56px; border-right: 1px solid var(--line);
+      background: var(--accent); color: var(--black);
+      display: flex; flex-direction: column; justify-content: space-between;
+    }
+    .contact-left h2 {
+      font-size: clamp(36px, 4.5vw, 64px); font-weight: 900;
+      letter-spacing: -.05em; line-height: 1; margin-bottom: 20px;
+    }
+    .contact-left p { font-size: 15px; color: rgba(0,0,0,.6); line-height: 1.8; font-weight: 300; word-break: keep-all; }
+    .contact-info-list { display: flex; flex-direction: column; gap: 14px; margin-top: 48px; }
+    .ci-item { font-size: 14px; color: rgba(0,0,0,.65); display: flex; gap: 10px; }
+    .ci-item strong { color: var(--black); font-weight: 600; min-width: 64px; }
+    .contact-right { padding: 80px 56px; }
+    .cf-form { display: flex; flex-direction: column; gap: 0; }
+    .cf-field {
+      display: flex; flex-direction: column; gap: 6px;
+      padding: 20px 0; border-bottom: 1px solid var(--line);
+    }
+    .cf-field:first-child { border-top: 1px solid var(--line); }
+    .cf-field label { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--gray); font-weight: 600; }
+    .cf-field input,
+    .cf-field select,
+    .cf-field textarea {
+      background: transparent; border: none; outline: none;
+      font-size: 16px; color: var(--white); font-family: inherit;
+      padding: 4px 0; resize: none; -webkit-appearance: none; appearance: none;
+    }
+    .cf-field input::placeholder, .cf-field textarea::placeholder { color: #444; }
+    .cf-field select option { background: #111; }
+    .cf-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+    .cf-row-2 .cf-field:first-child { border-right: 1px solid var(--line); padding-right: 24px; }
+    .cf-row-2 .cf-field:last-child { padding-left: 24px; }
+    .cf-submit-row {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-top: 36px;
+    }
+    .cf-submit {
+      background: var(--accent); color: var(--black);
+      border: none; padding: 18px 48px; font-size: 15px; font-weight: 800;
+      letter-spacing: .04em; font-family: inherit; cursor: pointer;
+      border-radius: 2px; transition: opacity .2s;
+    }
+    .cf-submit:hover { opacity: .85; }
+    .cf-note { font-size: 12px; color: #444; }
+
+    /* FOOTER */
+    footer {
+      padding: 32px 56px; border-top: 1px solid var(--line);
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 13px; color: #444;
+    }
+    .footer-logo { font-size: 14px; font-weight: 900; letter-spacing: .1em; text-transform: uppercase; color: var(--white); }
+    .footer-logo span { color: var(--accent); }
+
+    /* REVEAL */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity .6s cubic-bezier(.22,1,.36,1), transform .6s cubic-bezier(.22,1,.36,1); }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    @media (max-width: 900px) {
+      nav { padding: 0 24px; }
+      .nav-links { display: none; }
+      .hero-inner { padding: 0 24px; }
+      .hero-bg-text { display: none; }
+      .hero-bottom { flex-direction: column; align-items: flex-start; gap: 32px; }
+      .hero-actions { align-items: flex-start; }
+      .stats-band { flex-wrap: wrap; }
+      .stat-block { flex: 0 0 50%; border-bottom: 1px solid #ddd; }
+      .stat-block:nth-child(2n) { border-right: none; }
+      .services-head { padding: 60px 24px 40px; flex-direction: column; gap: 12px; }
+      .svc-row { grid-template-columns: 60px 1fr; padding: 36px 24px; }
+      .svc-row-tags { display: none; }
+      .about-section { grid-template-columns: 1fr; }
+      .about-left { padding: 72px 24px; border-right: none; border-bottom: 1px solid var(--line); }
+      .about-right { grid-template-columns: 1fr 1fr; }
+      .process-section { padding: 72px 24px; }
+      .process-grid { grid-template-columns: 1fr 1fr; }
+      .p-step { padding: 28px 20px; }
+      .p-step:not(:first-child) { padding-left: 20px; }
+      .contact-section { grid-template-columns: 1fr; }
+      .contact-left { padding: 72px 24px; border-right: none; border-bottom: 1px solid var(--line); }
+      .contact-right { padding: 60px 24px; }
+      footer { flex-direction: column; gap: 10px; text-align: center; padding: 28px 24px; }
+    }
+    @media (max-width: 580px) {
+      .hero-title { font-size: 48px; }
+      .hero-bottom { gap: 24px; }
+      .stat-block { flex: 0 0 100%; border-right: none; }
+      .svc-row { grid-template-columns: 1fr; }
+      .svc-row-num { font-size: 12px; margin-bottom: -8px; }
+      .about-right { grid-template-columns: 1fr; }
+      .process-grid { grid-template-columns: 1fr; }
+      .p-step { border-right: none; border-bottom: 1px solid var(--line); }
+      .cf-row-2 { grid-template-columns: 1fr; }
+      .cf-row-2 .cf-field:first-child { border-right: none; padding-right: 0; }
+      .cf-row-2 .cf-field:last-child { padding-left: 0; }
+      .cf-submit-row { flex-direction: column; gap: 12px; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-logo">VERA<span>.</span></div>
+    <div class="nav-links">
+      <a href="#services">서비스</a>
+      <a href="#about">소개</a>
+      <a href="#process">프로세스</a>
+      <a href="#contact">문의</a>
+    </div>
+    <a href="#contact" class="nav-cta">무료 상담</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="hero-bg-text">VERA</div>
+    <div class="hero-inner">
+      <div class="hero-eyebrow">Business Consulting</div>
+      <h1 class="hero-title">
+        <span class="line"><span class="txt">비즈니스의</span></span>
+        <span class="line"><span class="txt">다음 단계를</span></span>
+        <span class="line"><span class="txt inv">함께 설계합니다.</span></span>
+      </h1>
+      <div class="hero-bottom">
+        <p class="hero-desc">전략 수립부터 실행까지, 데이터에 기반한 컨설팅으로<br>실질적인 성장을 만들어 드립니다.</p>
+        <div class="hero-actions">
+          <a href="#contact" class="btn-accent">무료 상담 신청 →</a>
+          <span class="hero-scroll-hint">Scroll to explore</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS BAND -->
+  <div class="stats-band">
+    <div class="stat-block reveal">
+      <div class="stat-num">200<span>+</span></div>
+      <div class="stat-label">프로젝트 완료</div>
+    </div>
+    <div class="stat-block reveal">
+      <div class="stat-num">98<span>%</span></div>
+      <div class="stat-label">고객 만족도</div>
+    </div>
+    <div class="stat-block reveal">
+      <div class="stat-num">12<span>년</span></div>
+      <div class="stat-label">업력</div>
+    </div>
+    <div class="stat-block reveal">
+      <div class="stat-num">50<span>+</span></div>
+      <div class="stat-label">파트너 기업</div>
+    </div>
+  </div>
+
+  <!-- SERVICES -->
+  <section class="services-section" id="services">
+    <div class="services-head">
+      <h2 class="reveal">비즈니스 전반을 커버합니다</h2>
+      <p class="reveal">스타트업부터 중견기업까지</p>
+    </div>
+    <div class="svc-row reveal">
+      <span class="svc-row-num">01</span>
+      <div>
+        <div class="svc-row-name">경영 전략</div>
+        <div class="svc-row-desc">현황 분석부터 중장기 로드맵까지, 데이터에 근거한 전략을 수립합니다. 시장의 본질을 파악하고 실행 가능한 방향을 제시합니다.</div>
+      </div>
+      <div class="svc-row-tags">
+        <span class="svc-tag">시장 분석 및 경쟁사 리서치</span>
+        <span class="svc-tag">비즈니스 모델 설계</span>
+        <span class="svc-tag">KPI 수립 및 성과 관리</span>
+      </div>
+    </div>
+    <div class="svc-row reveal">
+      <span class="svc-row-num">02</span>
+      <div>
+        <div class="svc-row-name">마케팅 컨설팅</div>
+        <div class="svc-row-desc">브랜드 포지셔닝부터 채널 전략까지, 실질적인 마케팅 성과를 만듭니다. 데이터 기반으로 효과적인 채널을 설계합니다.</div>
+      </div>
+      <div class="svc-row-tags">
+        <span class="svc-tag">브랜드 전략 및 아이덴티티</span>
+        <span class="svc-tag">디지털 마케팅 채널 설계</span>
+        <span class="svc-tag">콘텐츠 & 퍼포먼스 전략</span>
+      </div>
+    </div>
+    <div class="svc-row reveal">
+      <span class="svc-row-num">03</span>
+      <div>
+        <div class="svc-row-name">조직 & 운영</div>
+        <div class="svc-row-desc">성장하는 조직에 맞는 구조와 프로세스를 함께 설계합니다. 사람과 시스템이 함께 움직이는 조직을 만듭니다.</div>
+      </div>
+      <div class="svc-row-tags">
+        <span class="svc-tag">조직 구조 설계 및 재편</span>
+        <span class="svc-tag">업무 프로세스 최적화</span>
+        <span class="svc-tag">채용 전략 및 온보딩</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about-section" id="about">
+    <div class="about-left">
+      <div class="about-left-top">
+        <div class="eyebrow reveal">About</div>
+        <h2 class="reveal">문제를 정확히 보고<br>함께 해결합니다</h2>
+        <p class="reveal">Vera Consulting은 2012년 설립 이후 스타트업부터 중견기업까지 다양한 비즈니스의 성장을 함께해왔습니다.</p>
+        <p class="reveal">화려한 보고서보다 실행 가능한 솔루션을 중심으로, 고객사의 실제 문제를 데이터 기반으로 분석하고 해결합니다.</p>
+      </div>
+      <div class="about-team">
+        <div class="team-row reveal">
+          <div class="t-avatar">K</div>
+          <div class="t-info">
+            <h4>김준혁 대표 컨설턴트</h4>
+            <span>전략기획 · MBA · 경력 15년</span>
+          </div>
+        </div>
+        <div class="team-row reveal">
+          <div class="t-avatar">L</div>
+          <div class="t-info">
+            <h4>이소연 마케팅 디렉터</h4>
+            <span>브랜드전략 · 디지털마케팅 · 경력 10년</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="about-right">
+      <div class="a-card accent-card reveal">
+        <div class="a-num">200+</div>
+        <div class="a-label">완료 프로젝트</div>
+      </div>
+      <div class="a-card reveal">
+        <div class="a-num">98%</div>
+        <div class="a-label">고객 만족도</div>
+      </div>
+      <div class="a-card reveal">
+        <div class="a-num">12년</div>
+        <div class="a-label">업력</div>
+      </div>
+      <div class="a-card reveal">
+        <div class="a-num">50+</div>
+        <div class="a-label">파트너 기업</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="process-section" id="process">
+    <div class="process-head">
+      <div class="eyebrow reveal">Process</div>
+      <h2 class="reveal">4단계로 진행됩니다</h2>
+    </div>
+    <div class="process-grid">
+      <div class="p-step active reveal">
+        <div class="p-step-num">01</div>
+        <h3>무료 상담</h3>
+        <p>현황과 목표를 파악하는 1시간 무료 초기 상담</p>
+        <span class="p-free-tag">FREE</span>
+      </div>
+      <div class="p-step reveal">
+        <div class="p-step-num">02</div>
+        <h3>진단 & 분석</h3>
+        <p>데이터 기반의 현황 진단 및 문제 정의</p>
+      </div>
+      <div class="p-step reveal">
+        <div class="p-step-num">03</div>
+        <h3>전략 수립</h3>
+        <p>맞춤형 솔루션 및 실행 로드맵 제안</p>
+      </div>
+      <div class="p-step reveal">
+        <div class="p-step-num">04</div>
+        <h3>실행 지원</h3>
+        <p>전략 실행 모니터링 및 지속 피드백</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact-section" id="contact">
+    <div class="contact-left">
+      <div>
+        <h2>지금 바로<br>시작하세요</h2>
+        <p>첫 상담은 무료입니다. 아래 양식을 작성해 주시면 검토 후 빠르게 연락드립니다.</p>
+      </div>
+      <div class="contact-info-list">
+        <div class="ci-item"><strong>주소</strong>서울 강남구 테헤란로 521, 파르나스타워 18층</div>
+        <div class="ci-item"><strong>전화</strong>02-000-0000</div>
+        <div class="ci-item"><strong>운영</strong>평일 09:00 – 18:00</div>
+      </div>
+    </div>
+    <div class="contact-right">
+      <form class="cf-form" id="consultForm">
+        <div class="cf-row-2">
+          <div class="cf-field">
+            <label>이름 / 담당자명</label>
+            <input type="text" id="cf-name" placeholder="홍길동" />
+          </div>
+          <div class="cf-field">
+            <label>회사명</label>
+            <input type="text" id="cf-company" placeholder="(주)베라" />
+          </div>
+        </div>
+        <div class="cf-row-2">
+          <div class="cf-field">
+            <label>연락처</label>
+            <input type="text" id="cf-phone" placeholder="010-0000-0000" />
+          </div>
+          <div class="cf-field">
+            <label>상담 분야</label>
+            <select id="cf-type">
+              <option value="" disabled selected>선택해주세요</option>
+              <option>경영 전략</option>
+              <option>마케팅 컨설팅</option>
+              <option>조직 & 운영</option>
+              <option>기타</option>
+            </select>
+          </div>
+        </div>
+        <div class="cf-field">
+          <label>문의 내용</label>
+          <textarea id="cf-desc" rows="5" placeholder="현재 상황과 해결하고 싶은 문제를 간단히 적어주세요."></textarea>
+        </div>
+        <div class="cf-submit-row">
+          <button type="submit" class="cf-submit">신청하기 →</button>
+          <span class="cf-note">제출 시 이메일 앱이 열립니다</span>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-logo">VERA<span>.</span></div>
+    <span>서울시 강남구 테헤란로 521 파르나스타워 18층</span>
+    <span>© 2026 Vera Consulting. All Rights Reserved.</span>
+  </footer>
+
+  <script>
+    const allReveal = document.querySelectorAll('.reveal');
+    allReveal.forEach(el => {
+      const siblings = Array.from(el.parentElement.children).filter(c => c.classList.contains('reveal'));
+      el.style.transitionDelay = `${siblings.indexOf(el) * 55}ms`;
+    });
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+    }, { threshold: 0.08 });
+    allReveal.forEach(el => io.observe(el));
+
+    document.getElementById('consultForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const name = document.getElementById('cf-name').value.trim();
+      const company = document.getElementById('cf-company').value.trim();
+      const phone = document.getElementById('cf-phone').value.trim();
+      const type = document.getElementById('cf-type').value;
+      const desc = document.getElementById('cf-desc').value.trim();
+      const body = [`이름: ${name||'-'}`,`회사명: ${company||'-'}`,`연락처: ${phone||'-'}`,`상담 분야: ${type||'-'}`,'',`문의 내용:`,desc||'-'].join('\n');
+      window.location.href = `mailto:dlatoquf1234@naver.com?subject=${encodeURIComponent(`[무료 상담 신청] ${name} / ${company}`)}&body=${encodeURIComponent(body)}`;
+    });
+  </script>
+</body>
+</html>
